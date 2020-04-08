@@ -11,7 +11,7 @@ class Tank:
 
         self.now_img = self.animation[0]
         self.img_rect = self.now_img.get_rect()
-        self.img_rect.y += 400
+        self.img_rect.y += 600
         self.img_rect.x += 400
 
         self.counter = 0

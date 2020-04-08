@@ -15,6 +15,7 @@ def run_game():
     tank1 = Tank('p1', settings, screen)
 
     gf = GameFunc(settings, screen, tank1)
+    gf.map_reader_txt()
 
     while True:
         gf.check_events()

@@ -15,34 +15,12 @@ class GameFunc:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-                # elif event.type == pygame.KEYDOWN:
-            #     self.check_keydown(event)
-            # elif event.type == pygame.KEYUP:
-            #     self.check_keyup(event)
-
-    # def check_keydown(self, event):
-    #     if event.key == pygame.K_LEFT:
-    #         self.tank1.move = (-1, 'X')
-    #     elif event.key == pygame.K_RIGHT:
-    #         self.tank1.move = (1, 'X')
-    #     elif event.key == pygame.K_DOWN:
-    #         self.tank1.move = (1, 'Y')
-    #     elif event.key == pygame.K_UP:
-    #         self.tank1.move = (-1, 'Y')
-    #
-    # def check_keyup(self, event):
-    #     if event.key == pygame.K_LEFT:
-    #         self.tank1.move = (0, None)
-    #     elif event.key == pygame.K_RIGHT:
-    #         self.tank1.move = (0, None)
-    #     elif event.key == pygame.K_DOWN:
-    #         self.tank1.move = (0, None)
-    #     elif event.key == pygame.K_UP:
-    #         self.tank1.move = (0, None)
 
     def update_screen(self):
         self.screen.fill(self.settings.scoreboard_bg)
         self.screen.fill(self.settings.battlefield_bg, self.main_rect)
+
+        self.map_update()
 
         self.tank1.update()
 
@@ -65,4 +43,23 @@ class GameFunc:
         return animation_scaled
 
     def map_reader_txt(self):
-        pass
+        path = 'data/Maps/level_1.goose'
+        self.txt_map = []
+
+        with open(path, 'r') as f:
+            for line in f:
+                self.txt_map.append(list(line))
+        # [line.remove(x) for line in self.txt_map for x in range(len(line)) if x == '\n']
+
+        self.bricks = pygame.image.load('data/Models/Blocks/bricks.png').convert_alpha()
+        self.bricks = pygame.transform.scale(self.bricks, (self.bricks.get_width() * 4, self.bricks.get_height() * 4))
+
+    def map_update(self):
+        y = 0
+        for line in self.txt_map:
+            x = 0
+            for tile in line:
+                if tile == '1':
+                    self.screen.blit(self.bricks, (x * 64 + 32, y * 64 + 32))
+                x += 1
+            y += 1
