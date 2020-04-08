@@ -2,6 +2,8 @@ import os
 import sys
 import pygame
 
+from data.block import Block
+
 
 class GameFunc:
     def __init__(self, settings, screen, tank1):
@@ -20,8 +22,7 @@ class GameFunc:
         self.screen.fill(self.settings.scoreboard_bg)
         self.screen.fill(self.settings.battlefield_bg, self.main_rect)
 
-        self.map_update()
-
+        self.blocks.update()
         self.tank1.update()
 
         pygame.display.flip()
@@ -49,17 +50,15 @@ class GameFunc:
         with open(path, 'r') as f:
             for line in f:
                 self.txt_map.append(list(line))
-        # [line.remove(x) for line in self.txt_map for x in range(len(line)) if x == '\n']
 
-        self.bricks = pygame.image.load('data/Models/Blocks/bricks.png').convert_alpha()
-        self.bricks = pygame.transform.scale(self.bricks, (self.bricks.get_width() * 4, self.bricks.get_height() * 4))
+        self.blocks = pygame.sprite.Group()
 
-    def map_update(self):
         y = 0
         for line in self.txt_map:
             x = 0
             for tile in line:
-                if tile == '1':
-                    self.screen.blit(self.bricks, (x * 64 + 32, y * 64 + 32))
+                if tile is '1':
+                    block = Block((x * 64 + 32, y * 64 + 32), tile, self.screen)
+                    self.blocks.add(block)
                 x += 1
             y += 1
