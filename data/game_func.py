@@ -13,6 +13,8 @@ class GameFunc:
 
         self.tank1 = tank1
 
+        self.blocks = pygame.sprite.Group()
+
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -23,6 +25,7 @@ class GameFunc:
         self.screen.fill(self.settings.battlefield_bg, self.main_rect)
 
         self.blocks.update()
+        self.check_collide_tb()
         self.tank1.update()
 
         pygame.display.flip()
@@ -45,16 +48,14 @@ class GameFunc:
 
     def map_reader_txt(self):
         path = 'data/Maps/level_1.goose'
-        self.txt_map = []
+        txt_map = []
 
         with open(path, 'r') as f:
             for line in f:
-                self.txt_map.append(list(line))
-
-        self.blocks = pygame.sprite.Group()
+                txt_map.append(list(line))
 
         y = 0
-        for line in self.txt_map:
+        for line in txt_map:
             x = 0
             for tile in line:
                 if tile is '1':
@@ -62,3 +63,12 @@ class GameFunc:
                     self.blocks.add(block)
                 x += 1
             y += 1
+
+    def check_collide_tb(self):
+        collide = pygame.sprite.spritecollideany(self.tank1, self.blocks)
+        if collide:
+            if type(collide) == Block:
+                # self.tank1.bumped = True
+                self.tank1.bump_block()  # TODO: fix this shit
+        # else:
+        # self.tank1.bumped = False
