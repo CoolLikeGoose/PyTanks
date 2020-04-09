@@ -52,6 +52,8 @@ class Tank(pygame.sprite.Sprite):
         elif keys[pygame.K_LEFT]:
             self.rect.x -= self.settings.speed
             self.img_rotation(90)
+        elif keys[pygame.K_SPACE]:
+            GF.fire_bullet()
 
     def img_rotation(self, deg):
         self.rotated_img = pygame.transform.rotate(self.now_img, deg)

@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from data.block import Block
+from data.bullet import Bullet
 
 
 class GameFunc:
@@ -14,6 +15,7 @@ class GameFunc:
         self.tank1 = tank1
 
         self.blocks = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
 
     def check_events(self):
         for event in pygame.event.get():
@@ -72,3 +74,7 @@ class GameFunc:
                 self.tank1.bump_block()  # TODO: fix this shit
         # else:
         # self.tank1.bumped = False
+    #
+    # def fire_bullet(self):
+    #     bullet = Bullet(self.screen, self.settings, self, self.rot)
+    #     self.bullets.add()
