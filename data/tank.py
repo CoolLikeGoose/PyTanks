@@ -1,14 +1,14 @@
 import pygame
-from data.game_func import GameFunc as GF
+import data.game_func as gff
 
 
 class Tank(pygame.sprite.Sprite):
-    def __init__(self, who, settings, screen):
+    def __init__(self, who, settings, screen, bullets):
         super().__init__()
         self.settings = settings
         self.screen = screen
 
-        self.animation = GF.load_anim(who)
+        self.animation = gff.GameFunc.load_anim(who)
 
         self.now_img = self.animation[0]
         self.rect = self.now_img.get_rect()
@@ -22,6 +22,7 @@ class Tank(pygame.sprite.Sprite):
         self.rot = 0
         self.rotated_img = self.now_img
         self.bumped = False
+        self.bullets = bullets
 
     def update(self):
         self.update_frame()
@@ -53,7 +54,7 @@ class Tank(pygame.sprite.Sprite):
             self.rect.x -= self.settings.speed
             self.img_rotation(90)
         elif keys[pygame.K_SPACE]:
-            GF.fire_bullet()
+            gff.GameFunc.fire_bullet(self)
 
     def img_rotation(self, deg):
         self.rotated_img = pygame.transform.rotate(self.now_img, deg)

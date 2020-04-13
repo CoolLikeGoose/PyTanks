@@ -2,7 +2,7 @@ import pygame
 
 from data.settings import Settings
 from data.game_func import GameFunc
-from data.tank import Tank
+
 
 def run_game():
     pygame.init()
@@ -12,9 +12,7 @@ def run_game():
     screen = pygame.display.set_mode(settings.screen_sizes)
     pygame.display.set_caption('PyTanks')
 
-    tank1 = Tank('p1', settings, screen)
-
-    gf = GameFunc(settings, screen, tank1)
+    gf = GameFunc(settings, screen)
     gf.map_reader_txt()
 
     while True:

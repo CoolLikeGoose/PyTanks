@@ -3,19 +3,21 @@ import sys
 import pygame
 
 from data.block import Block
+from data.tank import Tank
 from data.bullet import Bullet
 
 
 class GameFunc:
-    def __init__(self, settings, screen, tank1):
+    def __init__(self, settings, screen):
         self.screen = screen
         self.settings = settings
         self.main_rect = pygame.Rect(settings.main_rect)
 
-        self.tank1 = tank1
-
         self.blocks = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
+
+        self.tank1 = Tank('p1', settings, screen, self.bullets)
+
 
     def check_events(self):
         for event in pygame.event.get():
@@ -31,6 +33,9 @@ class GameFunc:
         self.tank1.update()
 
         pygame.display.flip()
+
+    def load_tank(self):
+        pass
 
     @staticmethod
     def load_anim(who):
@@ -74,7 +79,8 @@ class GameFunc:
                 self.tank1.bump_block()  # TODO: fix this shit
         # else:
         # self.tank1.bumped = False
-    #
-    # def fire_bullet(self):
-    #     bullet = Bullet(self.screen, self.settings, self, self.rot)
-    #     self.bullets.add()
+
+    @staticmethod
+    def fire_bullet(self):
+        bullet = Bullet(self.screen, self.settings, self, self.rot)
+        self.bullets.add(bullet)
